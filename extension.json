@@ -11,7 +11,7 @@
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "github",
-		"url": "https://github.com/easyeda/eext-batch-place-component"
+		"url": "https://github.com/easyeda/eext-batch-place-components"
 	},
 	"categories": "PCB",
 	"keywords": [
@@ -24,8 +24,8 @@
 	"images": {
 		"logo": "./images/logo.jpg"
 	},
-	"homepage": "https://github.com/easyeda/eext-batch-place-component",
-	"bugs": "https://github.com/easyeda/eext-batch-place-component/issues",
+	"homepage": "https://github.com/easyeda/eext-batch-place-components",
+	"bugs": "https://github.com/easyeda/eext-batch-place-components/issues",
 	"activationEvents": {},
 	"entry": "./dist/index",
 	"dependentExtensions": {},

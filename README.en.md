@@ -1,5 +1,7 @@
 # Batch Component Placement
 
+[中文](./README.md)
+
 A batch placement tool for EasyEDA Professional Edition that supports importing component information via CSV files and automatically placing components at specified coordinate locations.
 
 ## Supported Features

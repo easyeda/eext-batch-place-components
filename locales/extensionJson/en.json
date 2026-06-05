@@ -1,3 +1,11 @@
 {
-	"About...": "About..."
+	"About": "About",
+	"EasyEDA extension SDK v": "EasyEDA extension SDK v${1}",
+	"displayName": "Batch Place Components",
+	"description": "A tool for batch placing components in schematic or PCB by importing CSV files",
+	"PCB": "PCB",
+	"原理图": "Schematic",
+	"批量放置": "Batch Place",
+	"单位转换": "Unit Conversion",
+	"自动化": "Automation"
 }

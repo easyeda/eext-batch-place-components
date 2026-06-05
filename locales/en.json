@@ -1,4 +1,16 @@
 {
-	"About": "About",
-	"EasyEDA extension SDK v": "EasyEDA extension SDK v${1}"
+	"About...": "About...",
+	"Settings": "Settings",
+	"Component Source:": "Component Source:",
+	"Personal Library": "Personal Library",
+	"Project Library": "Project Library",
+	"System Library": "System Library",
+	"Other Library": "Other Library",
+	"Select Specific Library": "Select Specific Library",
+	"Please select a library...": "Please select a library...",
+	"Save": "Save",
+	"Please select a specific library": "Please select a specific library",
+	"Library selection saved!": "Library selection saved!",
+	"Failed to get library list: ${1}": "Failed to get library list: ${1}",
+	"Save failed: ${1}": "Save failed: ${1}"
 }

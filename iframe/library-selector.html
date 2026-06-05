@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>设置</title>
+    <title data-i18n="Settings"></title>
     <style>
         * {
             margin: 2px;
@@ -135,26 +135,26 @@
         <div class="popup-content">
             <form id="libraryForm">
                 <div class="form-group">
-                    <label class="form-label" for="libraryType">元件来源：</label>
+                    <label class="form-label" for="libraryType" data-i18n="Component Source:"></label>
                     <select id="libraryType" name="libraryType" class="form-input" onchange="onLibraryTypeChange()">
-                        <option value="personal">个人库</option>
-                        <option value="project">工程库</option>
-                        <option value="system">系统库</option>
-                        <option value="other">其他库</option>
+                        <option value="personal" data-i18n="Personal Library"></option>
+                        <option value="project" data-i18n="Project Library"></option>
+                        <option value="system" data-i18n="System Library"></option>
+                        <option value="other" data-i18n="Other Library"></option>
                     </select>
                 </div>
                 
                 <div class="form-group" id="specificLibraryGroup" style="display: none;">
-                    <label class="form-label" for="specificLibrary">选择具体库</label>
+                    <label class="form-label" for="specificLibrary" data-i18n="Select Specific Library"></label>
                     <select id="specificLibrary" name="specificLibrary" class="form-input">
-                        <option value="">请选择库...</option>
+                        <option value="" data-i18n="Please select a library..."></option>
                     </select>
                 </div>
             </form>
         </div>
         
         <div class="popup-footer" style="padding: 0 15px 15px 15px;">
-            <button type="button" class="btn btn-primary" onclick="saveLibrarySelection()">保存</button>
+            <button type="button" class="btn btn-primary" onclick="saveLibrarySelection()" data-i18n="Save"></button>
         </div>
 
         <div class="error-message" id="errorMessage"></div>
@@ -162,10 +162,25 @@
     </div>
 
     <script>
+        var edaObj = (typeof eda !== 'undefined') ? eda : (window.parent && window.parent.eda);
+        function t(tag, ...args) {
+            if (edaObj && edaObj.sys_I18n) return edaObj.sys_I18n.text(tag, undefined, undefined, ...args);
+            return tag;
+        }
+
+        function applyI18n() {
+            document.querySelectorAll('[data-i18n]').forEach(function(el) {
+                var tag = el.getAttribute('data-i18n');
+                el.textContent = t(tag);
+            });
+            document.title = t('Settings');
+        }
+
         let isProcessing = false;
 
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
+            applyI18n();
             loadLibrarySelection();
         });
 
@@ -180,7 +195,7 @@
                 specificLibraryGroup.style.display = 'block';
                 
                 // 清空现有选项
-                specificLibrarySelect.innerHTML = '<option value="">请选择库...</option>';
+                specificLibrarySelect.innerHTML = '<option value="">' + t('Please select a library...') + '</option>';
                 
                 try {
                     // 获取所有库列表
@@ -203,7 +218,7 @@
                     
                 } catch (error) {
                     console.error('获取库列表失败:', error);
-                    showError('获取库列表失败: ' + error.message);
+                    showError(t('Failed to get library list: ${1}', error.message));
                 }
             } else {
                 // 隐藏具体库选择框
@@ -253,7 +268,7 @@
                         // 对于其他库，使用用户选择的具体库
                         const specificLibraryUuid = document.getElementById('specificLibrary').value;
                         if (!specificLibraryUuid) {
-                            showError('请选择具体的库');
+                            showError(t('Please select a specific library'));
                             isProcessing = false;
                             return;
                         }
@@ -268,12 +283,12 @@
                 await eda.sys_Storage.setExtensionUserConfig('selectedLibraryUuid', libraryUuid);
                 
                 // 显示成功消息
-                showSuccess('库选择已保存！');
+                showSuccess(t('Library selection saved!'));
                 console.log('已保存库UUID:', libraryUuid);
                 
             } catch (error) {
                 console.error('保存库选择失败:', error);
-                showError('保存失败: ' + error.message);
+                showError(t('Save failed: ${1}', error.message));
             } finally {
                 isProcessing = false;
             }

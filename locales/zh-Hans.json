@@ -1,4 +1,16 @@
 {
-	"About": "关于",
-	"EasyEDA extension SDK v": "嘉立创EDA 扩展 SDK v${1}"
+	"About...": "关于...",
+	"Settings": "设置",
+	"Component Source:": "元件来源：",
+	"Personal Library": "个人库",
+	"Project Library": "工程库",
+	"System Library": "系统库",
+	"Other Library": "其他库",
+	"Select Specific Library": "选择具体库",
+	"Please select a library...": "请选择库...",
+	"Save": "保存",
+	"Please select a specific library": "请选择具体的库",
+	"Library selection saved!": "库选择已保存！",
+	"Failed to get library list: ${1}": "获取库列表失败: ${1}",
+	"Save failed: ${1}": "保存失败: ${1}"
 }

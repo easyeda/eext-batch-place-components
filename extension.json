@@ -1,5 +1,5 @@
 {
-  "name": "batch-place-components",
+  "name": "batch-place-component",
   "uuid": "9d8cd2e6608a453eb2054f5466fbbbcb",
   "displayName": "批量放置元件",
   "description": "支持导入CSV文件进行批量放置元件在原理图或PCB的小工具",

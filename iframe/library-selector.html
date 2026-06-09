@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="Settings"></title>
+    <title data-i18n="Settings">设置</title>
     <style>
         * {
             margin: 2px;
@@ -135,26 +135,26 @@
         <div class="popup-content">
             <form id="libraryForm">
                 <div class="form-group">
-                    <label class="form-label" for="libraryType" data-i18n="Component Source:"></label>
+                    <label class="form-label" for="libraryType" data-i18n="Component Source:">元件来源：</label>
                     <select id="libraryType" name="libraryType" class="form-input" onchange="onLibraryTypeChange()">
-                        <option value="personal" data-i18n="Personal Library"></option>
-                        <option value="project" data-i18n="Project Library"></option>
-                        <option value="system" data-i18n="System Library"></option>
-                        <option value="other" data-i18n="Other Library"></option>
+                        <option value="personal" data-i18n="Personal Library">个人库</option>
+                        <option value="project" data-i18n="Project Library">工程库</option>
+                        <option value="system" data-i18n="System Library">系统库</option>
+                        <option value="other" data-i18n="Other Library">其他库</option>
                     </select>
                 </div>
                 
                 <div class="form-group" id="specificLibraryGroup" style="display: none;">
-                    <label class="form-label" for="specificLibrary" data-i18n="Select Specific Library"></label>
+                    <label class="form-label" for="specificLibrary" data-i18n="Select Specific Library">选择具体库</label>
                     <select id="specificLibrary" name="specificLibrary" class="form-input">
-                        <option value="" data-i18n="Please select a library..."></option>
+                        <option value="" data-i18n="Please select a library...">请选择库...</option>
                     </select>
                 </div>
             </form>
         </div>
         
         <div class="popup-footer" style="padding: 0 15px 15px 15px;">
-            <button type="button" class="btn btn-primary" onclick="saveLibrarySelection()" data-i18n="Save"></button>
+            <button type="button" class="btn btn-primary" onclick="saveLibrarySelection()" data-i18n="Save">保存</button>
         </div>
 
         <div class="error-message" id="errorMessage"></div>

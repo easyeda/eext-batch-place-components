@@ -3,7 +3,7 @@
   "uuid": "9d8cd2e6608a453eb2054f5466fbbbcb",
   "displayName": "批量放置元件",
   "description": "支持导入CSV文件进行批量放置元件在原理图或PCB的小工具",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "publisher": "EasyEDA",
   "engines": {
     "eda": "^2.2.40"

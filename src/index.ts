@@ -10,6 +10,7 @@
  * 如需了解更多开发细节，请阅读：
  * https://prodocs.lceda.cn/cn/api/guide/
  */
+/* eslint-disable no-template-curly-in-string */ // i18n placeholders use ${1} format intentionally
 import * as extensionConfig from '../extension.json';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -205,7 +206,7 @@ async function placeFootprintsFromCSV(csvContent: string): Promise<void> {
     const footprints = parseCSVWithCoordinates(csvContent, 'mil'); // PCB使用mil作为内部单位
     
     if (footprints.length === 0) {
-        eda.sys_Dialog.showInformationMessage('CSV文件中没有找到有效的封装数据');
+        eda.sys_Dialog.showInformationMessage(eda.sys_I18n.text('No valid footprint data found in CSV file'));
         return;
     }
     
@@ -214,7 +215,7 @@ async function placeFootprintsFromCSV(csvContent: string): Promise<void> {
     const failedItems: string[] = [];
     
     try {
-        eda.sys_Dialog.showInformationMessage(`找到 ${footprints.length} 个封装，开始放置...`);
+        eda.sys_Dialog.showInformationMessage(eda.sys_I18n.text('Found ${1} footprints, starting placement...', undefined, undefined, footprints.length));
         
         for (let index = 0; index < footprints.length; index++) {
             const item = footprints[index];
@@ -228,20 +229,20 @@ async function placeFootprintsFromCSV(csvContent: string): Promise<void> {
                 
                 if (!footprintResult || footprintResult.length === 0) {
                     failedCount++;
-                    failedItems.push(`${item.name}: 未找到封装`);
+                    failedItems.push(eda.sys_I18n.text('Footprint not found: ${1}', undefined, undefined, item.name));
                     continue;
                 }
                 
                 if (!deviceResult || deviceResult.length === 0) {
                     failedCount++;
-                    failedItems.push(`${item.name}: 未找到器件`);
+                    failedItems.push(eda.sys_I18n.text('Device not found: ${1}', undefined, undefined, item.name));
                     continue;
                 }
-                
+
                 // 必须完全匹配名称
                 let selectedFootprint = null;
                 let selectedDevice = null;
-                
+
                 // 查找完全匹配的封装
                 for (const fp of footprintResult) {
                     if (fp.name === item.name) {
@@ -249,10 +250,10 @@ async function placeFootprintsFromCSV(csvContent: string): Promise<void> {
                         break;
                     }
                 }
-                
+
                 if (!selectedFootprint) {
                     failedCount++;
-                    failedItems.push(`${item.name}: 封装名称不完全匹配`);
+                    failedItems.push(eda.sys_I18n.text('Footprint name mismatch: ${1}', undefined, undefined, item.name));
                     continue;
                 }
                 
@@ -266,7 +267,7 @@ async function placeFootprintsFromCSV(csvContent: string): Promise<void> {
                 
                 if (!selectedDevice) {
                     failedCount++;
-                    failedItems.push(`${item.name}: 器件封装名称不完全匹配`);
+                    failedItems.push(eda.sys_I18n.text('Device footprint name mismatch: ${1}', undefined, undefined, item.name));
                     continue;
                 }
                 
@@ -294,7 +295,7 @@ async function placeFootprintsFromCSV(csvContent: string): Promise<void> {
         // 批量放置完成
         // 将失败详情写入日志
         if (failedItems.length > 0) {
-            eda.sys_Log.add(`批量放置失败详情 (共${failedItems.length}项):`);
+            eda.sys_Log.add(eda.sys_I18n.text('Batch footprint placement failure details (${1} items):', undefined, undefined, failedItems.length));
             failedItems.forEach(item => {
                 eda.sys_Log.add(`  ${item}`);
             });
@@ -302,11 +303,12 @@ async function placeFootprintsFromCSV(csvContent: string): Promise<void> {
         
         // 弹窗只显示简要统计信息
         eda.sys_Dialog.showInformationMessage(
-            `批量放置完成！成功: ${successCount}, 失败: ${failedCount}${failedItems.length > 0 ? '\n\n详细失败信息请查看日志面板' : ''}`
+            eda.sys_I18n.text('Batch placement completed! Success: ${1}, Failed: ${2}', undefined, undefined, successCount, failedCount) +
+            (failedItems.length > 0 ? eda.sys_I18n.text('\n\nSee log panel for detailed failure info') : '')
         );
         
     } catch (error) {
-        eda.sys_Message.showToastMessage(`批量放置过程中发生错误: ${error.message}`, 'error');
+        eda.sys_Message.showToastMessage(eda.sys_I18n.text('Error during batch placement: ${1}', undefined, undefined, error.message), 'error');
     }
 }
 
@@ -315,7 +317,7 @@ async function placeSymbolsFromCSV(csvContent: string): Promise<void> {
     const symbols = parseCSVWithCoordinates(csvContent, 'inch'); // 原理图使用inch作为内部单位
     
     if (symbols.length === 0) {
-        eda.sys_Dialog.showInformationMessage('CSV文件中没有找到有效的符号数据');
+        eda.sys_Dialog.showInformationMessage(eda.sys_I18n.text('No valid symbol data found in CSV file'));
         return;
     }
     
@@ -324,7 +326,7 @@ async function placeSymbolsFromCSV(csvContent: string): Promise<void> {
     const failedItems: string[] = [];
     
     try {
-        eda.sys_Dialog.showInformationMessage(`找到 ${symbols.length} 个符号，开始放置...`);
+        eda.sys_Dialog.showInformationMessage(eda.sys_I18n.text('Found ${1} symbols, starting placement...', undefined, undefined, symbols.length));
         
         for (let index = 0; index < symbols.length; index++) {
             const item = symbols[index];
@@ -338,20 +340,20 @@ async function placeSymbolsFromCSV(csvContent: string): Promise<void> {
                 
                 if (!symbolResult || symbolResult.length === 0) {
                     failedCount++;
-                    failedItems.push(`${item.name}: 未找到符号`);
+                    failedItems.push(eda.sys_I18n.text('Symbol not found: ${1}', undefined, undefined, item.name));
                     continue;
                 }
                 
                 if (!deviceResult || deviceResult.length === 0) {
                     failedCount++;
-                    failedItems.push(`${item.name}: 未找到器件`);
+                    failedItems.push(eda.sys_I18n.text('Device not found: ${1}', undefined, undefined, item.name));
                     continue;
                 }
-                
+
                 // 必须完全匹配名称
                 let selectedSymbol = null;
                 let selectedDevice = null;
-                
+
                 // 查找完全匹配的符号
                 for (const sym of symbolResult) {
                     if (sym.name === item.name) {
@@ -359,13 +361,13 @@ async function placeSymbolsFromCSV(csvContent: string): Promise<void> {
                         break;
                     }
                 }
-                
+
                 if (!selectedSymbol) {
                     failedCount++;
-                    failedItems.push(`${item.name}: 符号名称不完全匹配`);
+                    failedItems.push(eda.sys_I18n.text('Symbol name mismatch: ${1}', undefined, undefined, item.name));
                     continue;
                 }
-                
+
                 // 查找完全匹配的器件（通过symbolName匹配）
                 for (const dev of deviceResult) {
                     if (dev.symbolName === item.name) {
@@ -376,7 +378,7 @@ async function placeSymbolsFromCSV(csvContent: string): Promise<void> {
                 
                 if (!selectedDevice) {
                     failedCount++;
-                    failedItems.push(`${item.name}: 器件符号名称不完全匹配`);
+                    failedItems.push(eda.sys_I18n.text('Device symbol name mismatch: ${1}', undefined, undefined, item.name));
                     continue;
                 }
                 
@@ -403,7 +405,7 @@ async function placeSymbolsFromCSV(csvContent: string): Promise<void> {
         // 批量放置完成
         // 将失败详情写入日志
         if (failedItems.length > 0) {
-            eda.sys_Log.add(`批量放置符号失败详情 (共${failedItems.length}项):`);
+            eda.sys_Log.add(eda.sys_I18n.text('Batch symbol placement failure details (${1} items):', undefined, undefined, failedItems.length));
             failedItems.forEach(item => {
                 eda.sys_Log.add(`  ${item}`);
             });
@@ -411,16 +413,26 @@ async function placeSymbolsFromCSV(csvContent: string): Promise<void> {
         
         // 弹窗只显示简要统计信息
         eda.sys_Dialog.showInformationMessage(
-            `批量放置符号完成！成功: ${successCount}, 失败: ${failedCount}${failedItems.length > 0 ? '\n\n详细失败信息请查看日志面板' : ''}`
+            eda.sys_I18n.text('Batch symbol placement completed! Success: ${1}, Failed: ${2}', undefined, undefined, successCount, failedCount) +
+            (failedItems.length > 0 ? eda.sys_I18n.text('\n\nSee log panel for detailed failure info') : '')
         );
         
     } catch (error) {
-        eda.sys_Message.showToastMessage(`批量放置符号过程中发生错误: ${error.message}`, 'error');
+        eda.sys_Message.showToastMessage(eda.sys_I18n.text('Error during batch symbol placement: ${1}', undefined, undefined, error.message), 'error');
     }
 }
 
 export function about(): void {
 	eda.sys_Dialog.showInformationMessage(
-		"批量放置元件 v1.1.0\n\n支持CSV文件导入的批量放置元件工具，具备智能单位转换功能。\n\n功能：\n- 批量放置PCB封装（支持mm/mil单位自动转换）\n- 批量放置原理图符号（支持inch/mm单位自动转换）\n- 智能识别CSV表头中的单位信息\n- 自动进行单位转换以匹配EDA内部坐标系统\n\nCSV格式示例：\nName,X(mm),Y(mm)\n元件名称,坐标值,坐标值",
+		eda.sys_I18n.text('Batch Place Components v1.1.0') + '\n\n' +
+		eda.sys_I18n.text('Batch place components tool with CSV import and smart unit conversion.') + '\n\n' +
+		eda.sys_I18n.text('Features:') + '\n' +
+		eda.sys_I18n.text('- Batch place PCB footprints (auto mm/mil conversion)') + '\n' +
+		eda.sys_I18n.text('- Batch place schematic symbols (auto inch/mm conversion)') + '\n' +
+		eda.sys_I18n.text('- Smart unit detection from CSV headers') + '\n' +
+		eda.sys_I18n.text('- Auto unit conversion to match EDA internal coordinate system') + '\n\n' +
+		eda.sys_I18n.text('CSV format example:') + '\n' +
+		'Name,X(mm),Y(mm)\n' +
+		'元件名称,坐标值,坐标值',
 	);
 }
